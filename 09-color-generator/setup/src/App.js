@@ -6,12 +6,14 @@ import Values from 'values.js'
 function App() {
   const[color,setColor] = useState('');
   const[error,setError] = useState(false);
-  const [list,setList] = useState([]);
+  const[percent,setPercent] = useState(10)
+  const [list,setList] = useState(new Values("#f19031").all(10));
 
   const handleSubmit = (e)=>{
     e.preventDefault();
     try {
-      let colors = new Values(color).all(10);
+      let percentNums = parseInt(percent)
+      let colors = new Values(color).all(percentNums);
       setList(colors)      
     } catch (error) {
       setError(true)
@@ -28,6 +30,13 @@ function App() {
           className={`${error?'error':null} `}
         >
         </input>
+        <label className='percent' htmlFor='percent'>percent:</label>
+        <input 
+          type='text' 
+          placeholder='10' 
+          id='percent'
+          onChange={(e)=>setPercent(e.target.value)}
+        ></input>
         <button className='btn' type='submit'> submit</button>
       </form>
     </section>
